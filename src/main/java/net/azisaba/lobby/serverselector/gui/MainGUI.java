@@ -24,7 +24,7 @@ public class MainGUI extends ClickableGUI {
     private final ServerSelector plugin;
 
     private Inventory inv = null;
-    private ItemStack lgw, parkour, pvp, survival, casino, pata;
+    private ItemStack lgw, parkour, pvp, survival, casino, pata, sightseeing;
     private ItemStack close;
 
     @Override
@@ -37,7 +37,7 @@ public class MainGUI extends ClickableGUI {
             initializeItems();
 
             // アイテムをセット
-            List<ItemStack> items = Arrays.asList(lgw, pvp, survival, casino, pata);
+            List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing);
             // 配置場所を取得
             List<Integer> positions = getPosition(items.size());
 
@@ -84,6 +84,8 @@ public class MainGUI extends ClickableGUI {
             serverName = "casino";
         } else if ( item.isSimilar(pata) ) {
             serverName = "pata";
+        } else if (item.isSimilar(sightseeing)) {
+            serverName = "p";
         }
 
         // サーバーが指定されていない場合はreturn
@@ -163,6 +165,8 @@ public class MainGUI extends ClickableGUI {
             casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), Chat.f("&cカジノサーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", latestVersion));
         if ( pata == null )
             pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), Chat.f("&cPvEサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", latestVersion));
+        if ( sightseeing == null )
+            sightseeing = ItemHelper.create(Material.MINECART, Chat.f("&e&l観光"), Chat.f("&c観光サーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
         if ( close == null ) {
             close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         }
