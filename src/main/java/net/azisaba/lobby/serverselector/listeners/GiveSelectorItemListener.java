@@ -39,6 +39,11 @@ public class GiveSelectorItemListener implements Listener {
             }
         }
 
+        // 権限がない場合はreturn
+        if ( !p.hasPermission("serverselector.receiveitem") ) {
+            return;
+        }
+
         // アイテムをセット
         p.getInventory().setItem(4, plugin.getSelectorItem());
     }

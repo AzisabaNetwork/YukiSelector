@@ -8,3 +8,5 @@ api-version: 1.13
 permissions:
   serverselector.clearinv.exempt:
     default: op
+  serverselector.receiveitem:
+    default: true
