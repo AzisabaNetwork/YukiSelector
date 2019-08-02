@@ -25,6 +25,7 @@ public class MainGUI extends ClickableGUI {
 
     private Inventory inv = null;
     private ItemStack lgw, parkour, pvp, survival, casino, pata;
+    private ItemStack close;
 
     @Override
     public Inventory createInventory(Player p) {
@@ -61,6 +62,14 @@ public class MainGUI extends ClickableGUI {
             return;
         }
 
+        Player p = (Player) e.getWhoClicked();
+
+        // 閉じるボタンなら閉じてreturn
+        if ( item.isSimilar(close) ) {
+            p.closeInventory();
+            return;
+        }
+
         // アイテムからサーバーを取得する
         String serverName = null;
         if ( item.isSimilar(lgw) ) {
@@ -81,8 +90,6 @@ public class MainGUI extends ClickableGUI {
         if ( serverName == null ) {
             return;
         }
-
-        Player p = (Player) e.getWhoClicked();
 
         // サーバーに転送する
         try {
@@ -155,5 +162,8 @@ public class MainGUI extends ClickableGUI {
             casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), Chat.f("&cカジノサーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", LATEST_VERSION));
         if ( pata == null )
             pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), Chat.f("&cPvEサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", LATEST_VERSION));
+        if ( close == null ) {
+            close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
+        }
     }
 }

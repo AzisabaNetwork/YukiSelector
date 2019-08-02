@@ -1,5 +1,6 @@
 package net.azisaba.lobby.serverselector.listeners;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -53,6 +54,8 @@ public class ItemClickListener implements Listener {
 
         // インベントリを取得しプレイヤーに開かせる
         openInventory(p);
+        // 音を鳴らす
+        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
     }
 
     /**
@@ -79,6 +82,8 @@ public class ItemClickListener implements Listener {
 
         // インベントリを開かせる
         openInventory(p);
+        // 音を鳴らす
+        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
     }
 
     /**
