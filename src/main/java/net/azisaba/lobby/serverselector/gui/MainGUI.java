@@ -144,24 +144,25 @@ public class MainGUI extends ClickableGUI {
         return Collections.emptyList();
     }
 
-    private final String LATEST_VERSION = "1.14.4";
-
     /**
      * 各アイテムをフィールドに設定します
      */
     private void initializeItems() {
+
+        String latestVersion = plugin.getDefaultConfig().getLatestMinecraftVersion();
+
         if ( lgw == null )
-            lgw = ItemHelper.create(Material.BOW, Chat.f("&e&lLeonGunWar"), Chat.f("&c銃撃戦サーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", LATEST_VERSION));
+            lgw = ItemHelper.create(Material.BOW, Chat.f("&e&lLeonGunWar"), Chat.f("&c銃撃戦サーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", latestVersion));
         if ( parkour == null )
-            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), Chat.f("&cパルクールサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", LATEST_VERSION));
+            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), Chat.f("&cパルクールサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
         if ( pvp == null )
-            pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), Chat.f("&cPvPサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", LATEST_VERSION));
+            pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), Chat.f("&cPvPサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", latestVersion));
         if ( survival == null )
-            survival = ItemHelper.create(Material.GRASS_BLOCK, Chat.f("&e&l生活"), Chat.f("&cサバイバルサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", LATEST_VERSION));
+            survival = ItemHelper.create(Material.GRASS_BLOCK, Chat.f("&e&l生活"), Chat.f("&cサバイバルサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
         if ( casino == null )
-            casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), Chat.f("&cカジノサーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", LATEST_VERSION));
+            casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), Chat.f("&cカジノサーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", latestVersion));
         if ( pata == null )
-            pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), Chat.f("&cPvEサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", LATEST_VERSION));
+            pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), Chat.f("&cPvEサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", latestVersion));
         if ( close == null ) {
             close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         }

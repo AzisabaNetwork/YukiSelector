@@ -1,3 +1,6 @@
 # 参加時にインベントリを空にする
 # serverselector.clearinv.exempt 権限を持っている場合は免除
 ClearInventoryOnJoin: false
+
+# 現在の最新バージョン
+LatestMinecraftVersion: "1.14.4"

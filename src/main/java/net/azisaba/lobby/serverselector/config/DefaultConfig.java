@@ -9,6 +9,8 @@ public class DefaultConfig extends Config {
 
     @Getter
     private boolean clearInventoryEnable;
+    @Getter
+    private String latestMinecraftVersion;
 
     public DefaultConfig(@NonNull ServerSelector plugin) {
         super(plugin, "config.yml", "config.yml");
@@ -20,5 +22,6 @@ public class DefaultConfig extends Config {
         super.loadConfig();
 
         clearInventoryEnable = config.getBoolean("ClearInventoryOnJoin", false);
+        latestMinecraftVersion = config.getString("LatestMinecraftVersion", "1.14.4");
     }
 }
