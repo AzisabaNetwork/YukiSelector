@@ -30,6 +30,15 @@ public class GiveSelectorItemListener implements Listener {
     public void onJoinServer(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
+        // 設定が有効な場合
+        if ( plugin.getDefaultConfig().isClearInventoryEnable() ) {
+            // 権限がないプレイヤーの場合はインベントリを初期化する
+            if ( !p.hasPermission("serverselector.clearinv.exempt") ) {
+                p.getInventory().clear();
+                p.getInventory().setArmorContents(new ItemStack[4]);
+            }
+        }
+
         // アイテムをセット
         p.getInventory().setItem(4, plugin.getSelectorItem());
     }
@@ -37,6 +46,7 @@ public class GiveSelectorItemListener implements Listener {
     /**
      * プレイヤー退出時にサーバー選択アイテムを削除するListener <br>
      * Pluginを抜いた後にプレイヤーデータをいじってアイテムを削除しなければならなくなるのを防ぐため
+     *
      * @param e
      */
     @EventHandler
