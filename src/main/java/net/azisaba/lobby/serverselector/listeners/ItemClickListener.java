@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.serverselector.ServerSelector;
 import net.azisaba.lobby.serverselector.gui.MainGUI;
+import net.azisaba.lobby.serverselector.gui.core.ClickableGUI;
 
 /**
  *
@@ -55,7 +56,7 @@ public class ItemClickListener implements Listener {
         // インベントリを取得しプレイヤーに開かせる
         openInventory(p);
         // 音を鳴らす
-        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+        playSound(p);
     }
 
     /**
@@ -80,10 +81,19 @@ public class ItemClickListener implements Listener {
         // イベントをキャンセル
         e.setCancelled(true);
 
+        // 既に開いている場合はreturn
+        if ( p.getOpenInventory().getTopInventory() != null ) {
+            // インベントリチェック
+            ClickableGUI gui = plugin.getGuiManager().getMatchGUI(p.getOpenInventory().getTopInventory());
+            if ( gui != null && gui.getClass() == MainGUI.class ) {
+                return;
+            }
+        }
+
         // インベントリを開かせる
         openInventory(p);
         // 音を鳴らす
-        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+        playSound(p);
     }
 
     /**
@@ -110,5 +120,12 @@ public class ItemClickListener implements Listener {
     private void openInventory(Player player) {
         Inventory inv = plugin.getGuiManager().getMatchInstance(MainGUI.class).createInventory(player);
         player.openInventory(inv);
+    }
+
+    /**
+     * プレイヤーに音を鳴らす
+     */
+    private void playSound(Player player) {
+        player.playSound(player.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1f, 1.1f);
     }
 }
