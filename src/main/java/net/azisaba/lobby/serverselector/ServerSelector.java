@@ -44,6 +44,9 @@ public class ServerSelector extends JavaPlugin {
         this.defaultConfig = new DefaultConfig(this);
         this.defaultConfig.loadConfig();
 
+        // PluginMessagingChannelの登録
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         // GUIの登録
         guiManager.registerGUI(new MainGUI(this));
 
