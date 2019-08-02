@@ -5,3 +5,6 @@ author: siloneco
 description: ${project.description}
 website: ${project.url}
 api-version: 1.13
+permissions:
+  serverselector.clearinv.exempt:
+    default: op

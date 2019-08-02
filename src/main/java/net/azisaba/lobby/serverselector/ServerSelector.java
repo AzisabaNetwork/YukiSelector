@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.ChannelNotRegisteredException;
 
 import lombok.Getter;
+import net.azisaba.lobby.serverselector.config.DefaultConfig;
 import net.azisaba.lobby.serverselector.gui.MainGUI;
 import net.azisaba.lobby.serverselector.gui.core.ClickableGUIManager;
 import net.azisaba.lobby.serverselector.listeners.ClickableGUIDetectListener;
@@ -31,12 +32,18 @@ public class ServerSelector extends JavaPlugin {
 
     // 全部のClickableGUIを管理するインスタンス
     private ClickableGUIManager guiManager = new ClickableGUIManager();
+    // config.ymlの設定
+    private DefaultConfig defaultConfig;
 
     // サーバー選択用アイテム
     private ItemStack selectorItem = ItemHelper.create(Material.COMPASS, Chat.f("&cサーバー選択"), Chat.f("&eクリックでサーバーを選択できます！"));
 
     @Override
     public void onEnable() {
+        // Configの読み込み
+        this.defaultConfig = new DefaultConfig(this);
+        this.defaultConfig.loadConfig();
+
         // GUIの登録
         guiManager.registerGUI(new MainGUI(this));
 
