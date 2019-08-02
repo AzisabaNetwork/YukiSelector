@@ -46,6 +46,9 @@ public class GiveSelectorItemListener implements Listener {
 
         // アイテムをセット
         p.getInventory().setItem(4, plugin.getSelectorItem());
+
+        // サーバー選択アイテムにスロットを合わせる
+        p.getInventory().setHeldItemSlot(4);
     }
 
     /**
