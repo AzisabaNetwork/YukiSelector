@@ -45,6 +45,9 @@ public class MainGUI extends ClickableGUI {
             for ( int i = 0; i < items.size(); i++ ) {
                 inv.setItem(positions.get(i), items.get(i));
             }
+
+            // 閉じるボタンを配置
+            inv.setItem(getSize() - 1, close);
         }
 
         return inv;
