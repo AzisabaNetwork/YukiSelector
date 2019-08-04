@@ -1,5 +1,6 @@
 package net.azisaba.lobby.serverselector.gui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -7,21 +8,30 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.messaging.ChannelNotRegisteredException;
 
-import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.serverselector.ServerSelector;
+import net.azisaba.lobby.serverselector.events.PlayerCountUpdateEvent;
 import net.azisaba.lobby.serverselector.gui.core.ClickableGUI;
+import net.azisaba.lobby.serverselector.utils.BungeeUtils;
 import net.azisaba.lobby.serverselector.utils.Chat;
 import net.azisaba.lobby.serverselector.utils.ItemHelper;
 
-@RequiredArgsConstructor
-public class MainGUI extends ClickableGUI {
+public class MainGUI extends ClickableGUI implements Listener {
 
     private final ServerSelector plugin;
+
+    public MainGUI(ServerSelector plugin) {
+        this.plugin = plugin;
+        // アイテムの初期化
+        initializeItems();
+    }
 
     private Inventory inv = null;
     private ItemStack lgw, parkour, pvp, survival, casino, pata, sightseeing;
@@ -29,12 +39,9 @@ public class MainGUI extends ClickableGUI {
 
     @Override
     public Inventory createInventory(Player p) {
-        if ( inv == null ) {
+//        if ( inv == null ) {
             // インベントリ作成
             inv = Bukkit.createInventory(null, getSize(), getTitle());
-
-            // アイテムをセット
-            initializeItems();
 
             // アイテムをセット
             List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing);
@@ -48,7 +55,7 @@ public class MainGUI extends ClickableGUI {
 
             // 閉じるボタンを配置
             inv.setItem(getSize() - 1, close);
-        }
+//        }
 
         return inv;
     }
@@ -74,23 +81,7 @@ public class MainGUI extends ClickableGUI {
         }
 
         // アイテムからサーバーを取得する
-        String serverName = null;
-        if ( item.isSimilar(lgw) ) {
-            serverName = "lgw";
-        } else if ( item.isSimilar(parkour) ) {
-            serverName = "parkour";
-        } else if ( item.isSimilar(pvp) ) {
-            serverName = "pvp";
-        } else if ( item.isSimilar(survival) ) {
-            serverName = "main";
-        } else if ( item.isSimilar(casino) ) {
-            serverName = "casino";
-        } else if ( item.isSimilar(pata) ) {
-            serverName = "pata";
-        } else if (item.isSimilar(sightseeing)) {
-            serverName = "p";
-        }
-
+        String serverName = getServerNameFromItem(item);
         // サーバーが指定されていない場合はreturn
         if ( serverName == null ) {
             return;
@@ -98,15 +89,43 @@ public class MainGUI extends ClickableGUI {
 
         // サーバーに転送する
         try {
-            plugin.sendPlayer(p, serverName);
+            BungeeUtils.requestSendPlayer(plugin, p, serverName);
         } catch ( ChannelNotRegisteredException ex ) {
             // サーバーがBungeeCordにつながっていない場合は警告を出力
-            plugin.getLogger().warning(Chat.f("BungeeCordに繋がっていないサーバーのためプレイヤーを転送できません！ (Player={0}, Server={1})", p.getName(), serverName));
+            plugin.getLogger().warning(Chat.f("PluginMessaginChannelが登録されていないため送信できません！ (Player={0}, Server={1})", p.getName(), serverName));
             p.sendMessage(Chat.f("&cサーバー移動に失敗しました。運営に報告してください。"));
         }
 
         // インベントリを閉じる
         p.closeInventory();
+    }
+
+    /**
+     * 人数が変わったときにアイテムの情報を書き換えるListener
+     */
+    @EventHandler
+    public void onPlayerCountUpdate(PlayerCountUpdateEvent e) {
+        String serverName = e.getServerName();
+        int count = e.getPlayerCount();
+
+        ItemStack item = getItemFromServerName(serverName);
+
+        // アイテムが取得できなかった場合return
+        if ( item == null ) {
+            return;
+        }
+
+        // 更新
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<String>(meta.getLore());
+
+        // loreの書き換え
+        lore.set(2, Chat.f("&aオンライン人数: &e{0}人", count));
+
+        // アイテムにセット
+        meta.setLore(lore);
+        // ItemMetaのアップデート
+        item.setItemMeta(meta);
     }
 
     @Override
@@ -117,6 +136,59 @@ public class MainGUI extends ClickableGUI {
     @Override
     public String getTitle() {
         return Chat.f("&cServer Selector");
+    }
+
+    /**
+     * アイテムからBungeeCordに登録されているサーバー名を取得する
+     *
+     * @param item 取得したいアイテム
+     * @return BungeeCordに登録されているサーバー名。見つからなければnull
+     */
+    private String getServerNameFromItem(ItemStack item) {
+        if ( item.isSimilar(lgw) ) {
+            return "lgw";
+        } else if ( item.isSimilar(parkour) ) {
+            return "parkour";
+        } else if ( item.isSimilar(pvp) ) {
+            return "pvp";
+        } else if ( item.isSimilar(survival) ) {
+            return "main";
+        } else if ( item.isSimilar(casino) ) {
+            return "casino";
+        } else if ( item.isSimilar(pata) ) {
+            return "pata";
+        } else if ( item.isSimilar(sightseeing) ) {
+            return "p";
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * BungeeCordに登録されているサーバー名からアイテムを取得する
+     *
+     * @param serverName 取得したいアイテムのサーバー名
+     * @return このクラスのフィールドにあるアイテム、存在しない場合null
+     */
+    private ItemStack getItemFromServerName(String serverName) {
+        switch (serverName) {
+        case "lgw":
+            return lgw;
+        case "parkour":
+            return parkour;
+        case "pvp":
+            return pvp;
+        case "main":
+            return survival;
+        case "casino":
+            return casino;
+        case "pata":
+            return pata;
+        case "p":
+            return sightseeing;
+        default:
+            return null;
+        }
     }
 
     /**
@@ -157,21 +229,26 @@ public class MainGUI extends ClickableGUI {
         String latestVersion = plugin.getDefaultConfig().getLatestMinecraftVersion();
 
         if ( lgw == null )
-            lgw = ItemHelper.create(Material.BOW, Chat.f("&e&lLeonGunWar"), Chat.f("&c銃撃戦サーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", latestVersion));
+            lgw = ItemHelper.create(Material.BOW, Chat.f("&e&lLeonGunWar"), getLore("銃撃戦", "1.12.2", "1.12.2", latestVersion));
         if ( parkour == null )
-            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), Chat.f("&cパルクールサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
+            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), getLore("パルクール", "1.13.2", "1.13.2", latestVersion));
         if ( pvp == null )
-            pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), Chat.f("&cPvPサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", latestVersion));
+            pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), getLore("PvP", "1.8.x", "1.8.x", latestVersion));
         if ( survival == null )
-            survival = ItemHelper.create(Material.GRASS_BLOCK, Chat.f("&e&l生活"), Chat.f("&cサバイバルサーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
+            survival = ItemHelper.create(Material.GRASS_BLOCK, Chat.f("&e&l生活"), getLore("サバイバル", "1.13.2", "1.13.2", latestVersion));
         if ( casino == null )
-            casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), Chat.f("&cカジノサーバー！"), "", Chat.f("&a推奨バージョン: &61.12.2"), Chat.f("&7(参加可能バージョン: 1.12.2-{0})", latestVersion));
+            casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), getLore("カジノ", "1.12.2", "1.12.2", latestVersion));
         if ( pata == null )
-            pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), Chat.f("&cPvEサーバー！"), "", Chat.f("&a推奨バージョン: &61.8.x"), Chat.f("&7(参加可能バージョン: 1.8.x-{0})", latestVersion));
+            pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), getLore("PvE", "1.8.x", "1.8.x", latestVersion));
         if ( sightseeing == null )
-            sightseeing = ItemHelper.create(Material.MINECART, Chat.f("&e&l観光"), Chat.f("&c観光サーバー！"), "", Chat.f("&a推奨バージョン: &61.13.2"), Chat.f("&7(参加可能バージョン: 1.13.2-{0})", latestVersion));
+            sightseeing = ItemHelper.create(Material.MINECART, Chat.f("&e&l観光"), getLore("観光", "1.13.2", "1.13.2", latestVersion));
         if ( close == null ) {
             close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         }
+    }
+
+    private String[] getLore(String serverType, String suggestVersion, String minVersion, String maxVersion) {
+        String[] lore = { Chat.f("&c{0}サーバー！", serverType), "", Chat.f("&aオンライン人数: &e-人"), Chat.f("&a推奨バージョン: &6{0}", suggestVersion), Chat.f("&7(参加可能バージョン: {0}-{1})", minVersion, maxVersion) };
+        return lore;
     }
 }
