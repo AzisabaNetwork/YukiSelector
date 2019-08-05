@@ -40,21 +40,21 @@ public class MainGUI extends ClickableGUI implements Listener {
     @Override
     public Inventory createInventory(Player p) {
 //        if ( inv == null ) {
-            // インベントリ作成
-            inv = Bukkit.createInventory(null, getSize(), getTitle());
+        // インベントリ作成
+        inv = Bukkit.createInventory(null, getSize(), getTitle());
 
-            // アイテムをセット
-            List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing);
-            // 配置場所を取得
-            List<Integer> positions = getPosition(items.size());
+        // アイテムをセット
+        List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing, parkour);
+        // 配置場所を取得
+        List<Integer> positions = getPosition(items.size());
 
-            // 各場所に配置
-            for ( int i = 0; i < items.size(); i++ ) {
-                inv.setItem(positions.get(i), items.get(i));
-            }
+        // 各場所に配置
+        for ( int i = 0; i < items.size(); i++ ) {
+            inv.setItem(positions.get(i), items.get(i));
+        }
 
-            // 閉じるボタンを配置
-            inv.setItem(getSize() - 1, close);
+        // 閉じるボタンを配置
+        inv.setItem(getSize() - 1, close);
 //        }
 
         return inv;
