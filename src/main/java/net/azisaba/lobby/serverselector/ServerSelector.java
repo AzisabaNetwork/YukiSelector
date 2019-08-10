@@ -13,6 +13,7 @@ import net.azisaba.lobby.serverselector.listeners.BungeeMessageListener;
 import net.azisaba.lobby.serverselector.listeners.ClickableGUIDetectListener;
 import net.azisaba.lobby.serverselector.listeners.GiveSelectorItemListener;
 import net.azisaba.lobby.serverselector.listeners.ItemClickListener;
+import net.azisaba.lobby.serverselector.listeners.PreventDropListener;
 import net.azisaba.lobby.serverselector.task.UpdatePlayerCountTask;
 import net.azisaba.lobby.serverselector.util.PlayerCounter;
 import net.azisaba.lobby.serverselector.utils.Chat;
@@ -62,6 +63,7 @@ public class ServerSelector extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ItemClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new GiveSelectorItemListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ClickableGUIDetectListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PreventDropListener(this), this);
 
         Bukkit.getPluginManager().registerEvents(gui, this);
 
