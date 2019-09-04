@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import lombok.Getter;
 import net.azisaba.lobby.serverselector.config.DefaultConfig;
 import net.azisaba.lobby.serverselector.gui.MainGUI;
 import net.azisaba.lobby.serverselector.gui.core.ClickableGUIManager;
@@ -14,10 +13,13 @@ import net.azisaba.lobby.serverselector.listeners.ClickableGUIDetectListener;
 import net.azisaba.lobby.serverselector.listeners.GiveSelectorItemListener;
 import net.azisaba.lobby.serverselector.listeners.ItemClickListener;
 import net.azisaba.lobby.serverselector.listeners.PreventDropListener;
+import net.azisaba.lobby.serverselector.listeners.PreventSwapItemListener;
 import net.azisaba.lobby.serverselector.task.UpdatePlayerCountTask;
 import net.azisaba.lobby.serverselector.util.PlayerCounter;
 import net.azisaba.lobby.serverselector.utils.Chat;
 import net.azisaba.lobby.serverselector.utils.ItemHelper;
+
+import lombok.Getter;
 
 /**
  *
@@ -55,15 +57,24 @@ public class ServerSelector extends JavaPlugin {
         playerCountTask = new UpdatePlayerCountTask(this);
         playerCountTask.runTaskTimer(this, 0, 20);
 
+        // サーバーバージョンを取得
+        String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + ".";
+        int versionNumber = Integer.parseInt(version.substring(3).substring(0, version.substring(3).indexOf("_")));
+
         // GUIの登録
-        MainGUI gui = new MainGUI(this);
+        MainGUI gui = new MainGUI(this, versionNumber);
         guiManager.registerGUI(gui);
 
+
         // Listenerの登録
-        Bukkit.getPluginManager().registerEvents(new ItemClickListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ItemClickListener(this,versionNumber), this);
         Bukkit.getPluginManager().registerEvents(new GiveSelectorItemListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ClickableGUIDetectListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PreventDropListener(this), this);
+        // 1.9以降の場合はオフハンド無効化Listenerを登録
+        if (versionNumber >= 9) {
+            Bukkit.getPluginManager().registerEvents(new PreventSwapItemListener(this), this);
+        }
 
         Bukkit.getPluginManager().registerEvents(gui, this);
 

@@ -26,9 +26,11 @@ import net.azisaba.lobby.serverselector.utils.ItemHelper;
 public class MainGUI extends ClickableGUI implements Listener {
 
     private final ServerSelector plugin;
+    private final int versionNumber;
 
-    public MainGUI(ServerSelector plugin) {
+    public MainGUI(ServerSelector plugin, int versionNumber) {
         this.plugin = plugin;
+        this.versionNumber = versionNumber;
         // アイテムの初期化
         initializeItems();
     }
@@ -159,7 +161,7 @@ public class MainGUI extends ClickableGUI implements Listener {
             return "pata";
         } else if ( item.isSimilar(sightseeing) ) {
             return "p";
-        } else if (item.isSimilar(fsw)) {
+        } else if ( item.isSimilar(fsw) ) {
             return "fsw";
         } else {
             return null;
@@ -236,16 +238,35 @@ public class MainGUI extends ClickableGUI implements Listener {
             parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), getLore("パルクール", "1.13.2", "1.13.2", "1.13.2"));
         if ( pvp == null )
             pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), getLore("PvP", "1.8.x", "1.8.x", latestVersion));
-        if ( survival == null )
-            survival = ItemHelper.create(Material.GRASS_BLOCK, Chat.f("&e&l生活"), getLore("サバイバル", "1.13.2", "1.13.2", latestVersion));
+        if ( survival == null ) {
+            String materialName;
+            if ( versionNumber >= 13 ) {
+                materialName = "GRASS_BLOCK";
+            } else {
+                materialName = "GRASS";
+            }
+            survival = ItemHelper.create(Material.valueOf(materialName), Chat.f("&e&l生活"), getLore("サバイバル", "1.13.2", "1.13.2", latestVersion));
+        }
         if ( casino == null )
             casino = ItemHelper.create(Material.GOLD_NUGGET, Chat.f("&e&lWGP"), getLore("カジノ", "1.12.2", "1.12.2", latestVersion));
-        if ( pata == null )
-            pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), getLore("PvE", "1.8.x", "1.8.x", latestVersion));
+        if ( pata == null ) {
+            if ( versionNumber >= 13 ) {
+                pata = ItemHelper.create(Material.valueOf("ZOMBIE_HEAD"), Chat.f("&e&lパタ"), getLore("PvE", "1.8.x", "1.8.x", latestVersion));
+            } else {
+                pata = ItemHelper.createItem(Material.valueOf("SKULL_ITEM"), 2, Chat.f("&e&lパタ"), getLore("PvE", "1.8.x", "1.8.x", latestVersion));
+            }
+        }
         if ( sightseeing == null )
             sightseeing = ItemHelper.create(Material.MINECART, Chat.f("&e&l観光"), getLore("観光", "1.13.2", "1.13.2", latestVersion));
-        if ( fsw == null )
-            fsw = ItemHelper.create(Material.GOLDEN_SWORD, Chat.f("&e&lFSW"), getLore("サバイバル + PvP", "1.11.x", "1.11.x", latestVersion));
+        if ( fsw == null ) {
+            String materialName;
+            if ( versionNumber >= 13 ) {
+                materialName = "GOLDEN_SWORD";
+            } else {
+                materialName = "GOLD_SWORD";
+            }
+            fsw = ItemHelper.create(Material.valueOf(materialName), Chat.f("&e&lFSW"), getLore("サバイバル + PvP", "1.11.x", "1.11.x", latestVersion));
+        }
         if ( close == null ) {
             close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         }

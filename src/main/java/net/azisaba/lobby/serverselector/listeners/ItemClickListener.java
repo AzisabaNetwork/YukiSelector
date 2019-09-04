@@ -7,14 +7,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.serverselector.ServerSelector;
 import net.azisaba.lobby.serverselector.gui.MainGUI;
 import net.azisaba.lobby.serverselector.gui.core.ClickableGUI;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -28,6 +28,7 @@ import net.azisaba.lobby.serverselector.gui.core.ClickableGUI;
 public class ItemClickListener implements Listener {
 
     private final ServerSelector plugin;
+    private final int versionNumber;
 
     /**
      * 権限持ちがWorldGuardの移動に引っかからないように、priorityはLOWEST
@@ -97,22 +98,6 @@ public class ItemClickListener implements Listener {
     }
 
     /**
-     * オフハンドにサーバー選択アイテムを持つことを阻止するListener
-     *
-     * @param e
-     */
-    @EventHandler(priority = EventPriority.LOW)
-    public void onSwapItem(PlayerSwapHandItemsEvent e) {
-        ItemStack main = e.getMainHandItem();
-        ItemStack off = e.getOffHandItem();
-
-        // サーバー選択アイテムならキャンセル
-        if ( (main != null && main.isSimilar(plugin.getSelectorItem())) || (off != null && off.isSimilar(plugin.getSelectorItem())) ) {
-            e.setCancelled(true);
-        }
-    }
-
-    /**
      * プレイヤーにサーバー選択インベントリを開かせるメソッド
      *
      * @param player サーバー選択インベントリを開かせるプレイヤー。既に開いているインベントリは強制的に閉じられる
@@ -126,6 +111,10 @@ public class ItemClickListener implements Listener {
      * プレイヤーに音を鳴らす
      */
     private void playSound(Player player) {
-        player.playSound(player.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1f, 1.1f);
+        if ( versionNumber >= 9 ) {
+            player.playSound(player.getLocation(), Sound.valueOf("ENTITY_BAT_TAKEOFF"), 1f, 1.1f);
+        } else {
+            player.playSound(player.getLocation(), Sound.valueOf("BAT_TAKEOFF"), 1f, 1.1f);
+        }
     }
 }
