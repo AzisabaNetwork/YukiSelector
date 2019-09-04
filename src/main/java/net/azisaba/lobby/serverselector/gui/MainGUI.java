@@ -34,7 +34,7 @@ public class MainGUI extends ClickableGUI implements Listener {
     }
 
     private Inventory inv = null;
-    private ItemStack lgw, parkour, pvp, survival, casino, pata, sightseeing;
+    private ItemStack lgw, parkour, pvp, survival, casino, pata, sightseeing, fsw;
     private ItemStack close;
 
     @Override
@@ -44,7 +44,7 @@ public class MainGUI extends ClickableGUI implements Listener {
         inv = Bukkit.createInventory(null, getSize(), getTitle());
 
         // アイテムをセット
-        List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing, parkour);
+        List<ItemStack> items = Arrays.asList(survival, lgw, pvp, casino, pata, sightseeing, parkour, fsw);
         // 配置場所を取得
         List<Integer> positions = getPosition(items.size());
 
@@ -159,6 +159,8 @@ public class MainGUI extends ClickableGUI implements Listener {
             return "pata";
         } else if ( item.isSimilar(sightseeing) ) {
             return "p";
+        } else if (item.isSimilar(fsw)) {
+            return "fsw";
         } else {
             return null;
         }
@@ -242,6 +244,8 @@ public class MainGUI extends ClickableGUI implements Listener {
             pata = ItemHelper.create(Material.ZOMBIE_HEAD, Chat.f("&e&lパタ"), getLore("PvE", "1.8.x", "1.8.x", latestVersion));
         if ( sightseeing == null )
             sightseeing = ItemHelper.create(Material.MINECART, Chat.f("&e&l観光"), getLore("観光", "1.13.2", "1.13.2", latestVersion));
+        if ( fsw == null )
+            fsw = ItemHelper.create(Material.GOLDEN_SWORD, Chat.f("&e&lFSW"), getLore("サバイバル + PvP", "1.11.x", "1.11.x", latestVersion));
         if ( close == null ) {
             close = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         }
