@@ -220,6 +220,12 @@ public class MainGUI extends ClickableGUI implements Listener {
             return Arrays.asList(10, 12, 14, 16, 29, 31, 33);
         case 8:
             return Arrays.asList(10, 12, 14, 16, 28, 30, 32, 34);
+        case 9:
+            return Arrays.asList(10, 12, 14, 16, 22, 28, 30, 32, 34);
+        case 10:
+            return Arrays.asList(10, 12, 14, 16, 20, 24, 28, 30, 32, 34);
+        case 11:
+            return Arrays.asList(10, 12, 14, 16, 20, 22, 24, 28, 30, 32, 34);
         }
 
         return Collections.emptyList();
