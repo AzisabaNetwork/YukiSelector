@@ -121,7 +121,7 @@ public class MainGUI extends ClickableGUI implements Listener {
         List<String> lore = new ArrayList<String>(meta.getLore());
 
         // loreの書き換え
-        lore.set(2, Chat.f("&aオンライン人数: &e{0}人", count));
+        lore.set(2, Chat.f("&7オンライン人数: &e{0}人", count));
 
         // アイテムにセット
         meta.setLore(lore);
@@ -240,7 +240,7 @@ public class MainGUI extends ClickableGUI implements Listener {
         if (lgw == null)
             lgw = ItemHelper.create(Material.BOW, Chat.f("&e&lLeonGunWar"), getLore("銃撃戦", "1.12.2", "1.12.2", latestVersion));
         if (parkour == null)
-            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), getLore("パルクール", "1.13.2", "1.13.2", "1.13.2"));
+            parkour = ItemHelper.create(Material.DIAMOND_BOOTS, Chat.f("&e&lParkour"), getLore("パルクール", "1.13.2", "1.13.2", latestVersion));
         if (pvp == null)
             pvp = ItemHelper.create(Material.DIAMOND_SWORD, Chat.f("&e&lPvP"), getLore("PvP", "1.8.x", "1.8.x", latestVersion));
         if (survival == null) {
@@ -250,7 +250,7 @@ public class MainGUI extends ClickableGUI implements Listener {
             } else {
                 materialName = "GRASS";
             }
-            survival = ItemHelper.create(Material.valueOf(materialName), Chat.f("&e&l生活"), getLore("サバイバル", "1.13.2", "1.13.2", latestVersion));
+            survival = ItemHelper.create(Material.valueOf(materialName), Chat.f("&e&l生活"), getLore("サバイバル", "1.15.2", "1.15.2", latestVersion));
         }
         if (phantasyGate == null)
             phantasyGate = ItemHelper.create(Material.NETHER_STAR, Chat.f("&e&lPhantasy Gate"), getLore("サバイバル +α", "1.12.2", "1.12.2", latestVersion));
@@ -278,12 +278,14 @@ public class MainGUI extends ClickableGUI implements Listener {
     }
 
     private String[] getLore(String serverType, String suggestVersion, String minVersion, String maxVersion) {
-        String[] lore = {Chat.f("&c{0}サーバー！", serverType), "", Chat.f("&aオンライン人数: &e-人"), Chat.f("&a推奨バージョン: &6{0}", suggestVersion), Chat.f("&7(参加可能バージョン: {0}-{1})", minVersion, maxVersion)};
-
+        String version = suggestVersion;
         // minVersionとmaxVersionが同じの場合メッセージを変更
         if (minVersion.equals(maxVersion)) {
-            lore[lore.length - 1] = Chat.f("&7(参加可能バージョン: {0}のみ)", minVersion);
+            version += Chat.f(" &7({0}のみ)", minVersion);
+        } else {
+            version += Chat.f(" &7({0}-{1})", minVersion, maxVersion);
         }
-        return lore;
+
+        return new String[]{Chat.f("&c{0}サーバー！", serverType), "", Chat.f("&7オンライン人数: &e-人"), Chat.f("&7バージョン: &6{0}", version)};
     }
 }
