@@ -94,11 +94,11 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
     // SERVER SELECTOR ITEM - END
 
     // PLUGIN MESSAGING - START
-    private final Map<String, LinkedList<CompletableFuture<?>>> callbacksMap = new HashMap<>();
+    private final Map<String, Deque<CompletableFuture<?>>> callbacksMap = new HashMap<>();
 
     private void requestFuture(List<String> salt, CompletableFuture<?> future) {
         String key = String.join("", salt);
-        callbacksMap.putIfAbsent(key, new LinkedList<>());
+        callbacksMap.putIfAbsent(key, new ArrayDeque<>());
         callbacksMap.get(key).offer(future);
     }
 
