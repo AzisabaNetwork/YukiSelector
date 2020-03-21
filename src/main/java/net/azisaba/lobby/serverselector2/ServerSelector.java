@@ -39,7 +39,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
             Material.INK_SACK,
             (short) 4,
             ChatColor.AQUA + "サーバー選択",
-            ItemFactory.createLore(ChatColor.YELLOW + "クリックでサーバーを選択できます！"));
+            Collections.singletonList(ChatColor.YELLOW + "クリックでサーバーを選択できます！"));
     private final Map<String, ItemStack> serverMapping = ImmutableMap.of();
 
     @EventHandler
@@ -85,7 +85,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                         item = ItemFactory.create(
                                 Material.GRASS,
                                 info.getName(),
-                                ItemFactory.createLore(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
+                                Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
                     }
                     if (item != null) {
                         item.setAmount(info.getPlayerCount());

@@ -1,26 +1,20 @@
 package net.azisaba.lobby.serverselector2;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
+@UtilityClass
 public class ItemFactory {
 
-    protected ItemFactory() {
+    public ItemStack create(Material type, String name, List<String> lore) {
+        return create(type, (short) 0, name, lore);
     }
 
-    public static List<String> createLore(String... lines) {
-        return Arrays.asList(lines);
-    }
-
-    public static ItemStack create(Material type, String name, List<String> lore) {
-        return create(type, (short) 1, name, lore);
-    }
-
-    public static ItemStack create(Material type, short damage, String name, List<String> lore) {
+    public ItemStack create(Material type, short damage, String name, List<String> lore) {
         ItemStack item = new ItemStack(type);
         item.setDurability(damage);
         ItemMeta meta = item.getItemMeta();
