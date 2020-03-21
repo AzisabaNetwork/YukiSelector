@@ -16,17 +16,11 @@ public class ItemFactory {
 
     public ItemStack create(Material type, short damage, String name, List<String> lore) {
         ItemStack item = new ItemStack(type);
-        item.setDurability(damage);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            if (name != null) {
-                meta.setDisplayName(name);
-            }
-            if (lore != null) {
-                meta.setLore(lore);
-            }
-        }
+        meta.setDisplayName(name);
+        meta.setLore(lore);
         item.setItemMeta(meta);
+        item.setDurability(damage);
         return item;
     }
 }

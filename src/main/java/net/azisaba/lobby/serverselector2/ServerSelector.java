@@ -45,27 +45,24 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (!player.hasPermission("serverselector2.receiveitem")) {
-            return;
+        if (player.hasPermission("serverselector2.receiveitem")) {
+            PlayerInventory inventory = player.getInventory();
+            inventory.setItem(1, selectorItem.clone());
         }
-        PlayerInventory inventory = player.getInventory();
-        inventory.setItem(1, selectorItem.clone());
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onItemClick(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
-        if (item == null || !selectorItem.isSimilar(item)) {
-            return;
+        if (item != null && selectorItem.isSimilar(item)) {
+            event.setCancelled(true);
+            Action action = event.getAction();
+            if (action.toString().startsWith("RIGHT_CLICK_")) {
+                Player player = event.getPlayer();
+                player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1f, (float) Math.random() + 1f);
+                openInventory(player);
+            }
         }
-        event.setCancelled(true);
-        Action action = event.getAction();
-        if (!action.toString().startsWith("RIGHT_CLICK_")) {
-            return;
-        }
-        Player player = event.getPlayer();
-        player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1f, (float) Math.random() + 1f);
-        openInventory(player);
     }
 
     public void openInventory(Player player) {
@@ -88,7 +85,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                                 Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
                     }
                     if (item != null) {
-                        item.setAmount(info.getPlayerCount());
+                        item.setAmount(Math.max(1, info.getPlayerCount()));
                         inventory.addItem(item);
                     }
                 });
@@ -177,13 +174,14 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     Arrays.stream(servers)
                             .forEach(x -> serverMap.putIfAbsent(x, new ServerInfo()));
                 })
-                .whenComplete((servers, t) -> Arrays.stream(servers).forEach(server -> requestPlayerCount(player, server)
-                        .whenComplete((playerCount, t2) -> {
-                            ServerInfo info = new ServerInfo();
-                            info.setName(server);
-                            info.setPlayerCount(playerCount);
-                            serverMap.put(server, info);
-                        })));
+                .whenComplete((servers, t) -> Arrays.stream(servers)
+                        .forEach(server -> requestPlayerCount(player, server)
+                                .whenComplete((playerCount, t2) -> {
+                                    ServerInfo info = new ServerInfo();
+                                    info.setName(server);
+                                    info.setPlayerCount(playerCount);
+                                    serverMap.put(server, info);
+                                })));
     }
     // SERVER UPDATING TASK - END
 }
