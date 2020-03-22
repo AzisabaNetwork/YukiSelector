@@ -43,8 +43,8 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
             ChatColor.AQUA + "サーバー選択",
             Collections.singletonList(ChatColor.YELLOW + "クリックでサーバーを選択できます！"));
 
-    private final Map<String, Function<ServerInfo, ItemStack>> serverMapping = ImmutableMap.of(
-            "lgw", info -> ItemFactory.create(
+    private final Map<String, Function<ServerInfo, ItemStack>> serverMapping = new ImmutableMap.Builder<String, Function<ServerInfo, ItemStack>>()
+            .put("lgw", info -> ItemFactory.create(
                     Material.BOW,
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Leon Gun War",
                     Arrays.asList(
@@ -52,8 +52,18 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
-                            ChatColor.GRAY + "タグ: 火器, PvP"))
-    );
+                            ChatColor.GRAY + "タグ: 銃, PvP")))
+            .put("casino", info -> ItemFactory.create(
+                    Material.NETHER_STAR,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Phantasy Gate",
+                    Arrays.asList(
+                            ChatColor.GRAY + "WGPサーバーの後継サーバーとして開発されたサーバーです。",
+                            ChatColor.GRAY + "サバイバルで生活したり、稼いだお金でギャンブルをすることができます。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
+                            ChatColor.GRAY + "タグ: サバイバル, 経済, カジノ, PvE")))
+            .build();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
