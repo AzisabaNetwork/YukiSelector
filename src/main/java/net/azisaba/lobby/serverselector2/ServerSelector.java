@@ -23,6 +23,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ServerSelector extends JavaPlugin implements Listener, PluginMessageListener {
@@ -41,7 +42,18 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
             (short) 4,
             ChatColor.AQUA + "サーバー選択",
             Collections.singletonList(ChatColor.YELLOW + "クリックでサーバーを選択できます！"));
-    private final Map<String, ItemStack> serverMapping = ImmutableMap.of();
+
+    private final Map<String, Function<ServerInfo, ItemStack>> serverMapping = ImmutableMap.of(
+            "lgw", info -> ItemFactory.create(
+                    Material.BOW,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Leon Gun War",
+                    Arrays.asList(
+                            ChatColor.GRAY + "FPSゲームができる銃撃戦サーバーです。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
+                            ChatColor.GRAY + "タグ: 火器, PvP"))
+    );
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -82,19 +94,19 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
             ServerInfo info = servers.get(i);
             ItemStack item;
             if (serverMapping.containsKey(info.getName())) {
-                // TODO: do mapping
-                item = null;
+                item = serverMapping.get(info.getName()).apply(info);
             } else {
                 item = ItemFactory.create(
                         Material.GRASS,
                         info.getName(),
-                        Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
+                        Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人"));
             }
             if (item != null) {
                 item.setAmount(Math.max(1, info.getPlayerCount()));
             }
+            int j = i;
             getServer().getScheduler().runTaskLaterAsynchronously(this, () -> {
-                inventory.addItem(item);
+                inventory.setItem(j, item);
                 player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1f, 1.3f);
             }, i * 2);
         }
