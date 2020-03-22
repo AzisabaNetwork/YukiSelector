@@ -23,6 +23,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public class ServerSelector extends JavaPlugin implements Listener, PluginMessageListener {
 
@@ -70,26 +71,33 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
         int totalSize = slotSize + 9;
         Inventory inventory = getServer().createInventory(null, totalSize, "サーバーを選択してね！");
         player.openInventory(inventory);
+        printInventory(player, inventory);
+    }
 
-        serverMap.values().stream()
+    public void printInventory(Player player, Inventory inventory) {
+        List<ServerInfo> servers = serverMap.values().stream()
                 .sorted(Comparator.comparingInt(ServerInfo::getPlayerCount).reversed())
-                .forEach(info -> {
-                    ItemStack item;
-                    if (serverMapping.containsKey(info.getName())) {
-                        // TODO: do mapping
-                        item = null;
-                    } else {
-                        item = ItemFactory.create(
-                                Material.GRASS,
-                                info.getName(),
-                                Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
-                    }
-                    if (item != null) {
-                        item.setAmount(Math.max(1, info.getPlayerCount()));
-                        inventory.addItem(item);
-                    }
-                });
-        player.updateInventory();
+                .collect(Collectors.toList());
+        for (int i = 0; i < servers.size(); i++) {
+            ServerInfo info = servers.get(i);
+            ItemStack item;
+            if (serverMapping.containsKey(info.getName())) {
+                // TODO: do mapping
+                item = null;
+            } else {
+                item = ItemFactory.create(
+                        Material.GRASS,
+                        info.getName(),
+                        Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + "人"));
+            }
+            if (item != null) {
+                item.setAmount(Math.max(1, info.getPlayerCount()));
+            }
+            getServer().getScheduler().runTaskLaterAsynchronously(this, () -> {
+                inventory.addItem(item);
+                player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1f, 1.3f);
+            }, i * 2);
+        }
     }
     // SERVER SELECTOR ITEM - END
 
