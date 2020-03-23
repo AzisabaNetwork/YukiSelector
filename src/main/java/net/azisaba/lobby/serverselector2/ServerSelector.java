@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
@@ -52,6 +53,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
+                            "",
                             ChatColor.GRAY + "タグ: 銃, PvP")))
             .put("casino", info -> ItemFactory.create(
                     Material.NETHER_STAR,
@@ -62,8 +64,66 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
+                            "",
                             ChatColor.GRAY + "タグ: サバイバル, 経済, カジノ, PvE")))
+            .put("pvp", info -> ItemFactory.create(
+                    Material.DIAMOND_SWORD,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "PvP",
+                    Arrays.asList(
+                            ChatColor.GRAY + "Mizinkobusters と siloneco の2人で作り上げるPvPサーバーです。",
+                            ChatColor.GRAY + "シンプルで遊びやすいサーバーを目指しています。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.15.2)",
+                            "",
+                            ChatColor.GRAY + "タグ: PvP, ミニゲーム")))
+            .put("parkour", info -> ItemFactory.create(
+                    Material.FEATHER,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Parkour",
+                    Arrays.asList(
+                            ChatColor.GRAY + "本格的なアスレチックができるサーバーです。",
+                            ChatColor.GRAY + "独自のシステムで実装されており大規模なアスレチックもあります。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2-1.15.2)",
+                            "",
+                            ChatColor.GRAY + "タグ: パルクール")))
+            .put("main", info -> ItemFactory.create(
+                    Material.GRASS,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Main",
+                    Arrays.asList(
+                            ChatColor.GRAY + "アジ鯖の中心となる生活サーバーです。",
+                            ChatColor.GRAY + "初心者から上級者まで楽しめるサーバーを目指しています。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
+                            "",
+                            ChatColor.GRAY + "タグ: サバイバル, 経済")))
+            .put("p", info -> ItemFactory.create(
+                    Material.MINECART,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "P",
+                    Arrays.asList(
+                            ChatColor.GRAY + "p_maikura 氏とビルダー陣が作るサーバーです。",
+                            ChatColor.GRAY + "本格的な建築を見ることができます。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2-1.15.2)",
+                            "",
+                            ChatColor.GRAY + "タグ: 観光")))
+            .put("pata", info -> ItemFactory.create(
+                    Material.ENCHANTMENT_TABLE,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Pata",
+                    Arrays.asList(
+                            ChatColor.GRAY + "2016年頃に patagonia002 が作り運営していたサーバーです。",
+                            ChatColor.GRAY + "バニラにはない鉱石、エンチャント、レシピ、地形など、様々な要素があります。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.15.2)",
+                            "",
+                            ChatColor.GRAY + "タグ: サバイバル, 経済, PvE")))
             .build();
+
+    private final String inventoryTitle = "サーバーを選択してね！";
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -88,10 +148,19 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
         }
     }
 
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        // Player player = (Player) event.getWhoClicked();
+        Inventory inventory = event.getInventory();
+        if (inventory != null && inventory.getTitle().equals(inventoryTitle)) {
+            event.setCancelled(true);
+        }
+    }
+
     public void openInventory(Player player) {
         int slotSize = (int) Math.ceil(serverMap.size() / 9f) * 9;
         int totalSize = slotSize + 9;
-        Inventory inventory = getServer().createInventory(null, totalSize, "サーバーを選択してね！");
+        Inventory inventory = getServer().createInventory(null, totalSize, inventoryTitle);
         player.openInventory(inventory);
         printInventory(player, inventory);
     }
@@ -107,7 +176,8 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                 item = serverMapping.get(info.getName()).apply(info);
             } else {
                 item = ItemFactory.create(
-                        Material.GRASS,
+                        Material.STAINED_GLASS_PANE,
+                        (short) 15,
                         info.getName(),
                         Collections.singletonList(ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人"));
             }
