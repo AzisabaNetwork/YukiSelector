@@ -82,7 +82,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Parkour",
                     Arrays.asList(
                             ChatColor.GRAY + "本格的なアスレチックができるサーバーです。",
-                            ChatColor.GRAY + "独自のシステムで実装されており大規模なアスレチックもあります。",
+                            ChatColor.GRAY + "独自のシステムと、大規模なアスレチックがあります。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2-1.15.2)",
@@ -115,7 +115,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Pata",
                     Arrays.asList(
                             ChatColor.GRAY + "2016年頃に patagonia002 が作り運営していたサーバーです。",
-                            ChatColor.GRAY + "バニラにはない鉱石、エンチャント、レシピ、地形など、様々な要素があります。",
+                            ChatColor.GRAY + "バニラにはない様々な要素があります。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.15.2)",
@@ -168,6 +168,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
     public void printInventory(Player player, Inventory inventory) {
         List<ServerInfo> servers = serverMap.values().stream()
                 .sorted(Comparator.comparingInt(ServerInfo::getPlayerCount).reversed())
+                .sorted(Comparator.comparing((Function<ServerInfo, Boolean>) info -> serverMapping.containsKey(info.getName())).reversed())
                 .collect(Collectors.toList());
         for (int i = 0; i < servers.size(); i++) {
             ServerInfo info = servers.get(i);
