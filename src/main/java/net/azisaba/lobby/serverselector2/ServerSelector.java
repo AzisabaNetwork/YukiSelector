@@ -129,9 +129,10 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPermission("serverselector2.receiveitem")) {
+        if (player.hasPermission("serverselector.receive")) {
             PlayerInventory inventory = player.getInventory();
             inventory.setItem(1, selectorItem.clone());
+            inventory.setHeldItemSlot(1);
         }
     }
 

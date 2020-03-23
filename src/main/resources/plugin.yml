@@ -5,7 +5,5 @@ authors: [siloneco, YukiLeafX]
 description: ${project.description}
 website: ${project.url}
 permissions:
-  serverselector2.clearinv.exempt:
-    default: op
-  serverselector2.receiveitem:
-    default: op
+  serverselector.receive:
+    default: false
