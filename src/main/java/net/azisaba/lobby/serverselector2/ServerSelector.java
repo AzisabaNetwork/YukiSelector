@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -150,10 +151,11 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        // Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
         if (inventory != null && inventory.getTitle().equals(inventoryTitle)) {
             event.setCancelled(true);
+            Player player = (Player) event.getWhoClicked();
+            processClick(player, inventory, event.getRawSlot(), event.getCurrentItem());
         }
     }
 
@@ -191,6 +193,44 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                 player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1f, 1.3f);
             }, i * 2);
         }
+    }
+
+    public void processClick(Player player, Inventory inventory, int slot, ItemStack item) {
+        if (item == null) {
+            return;
+        }
+        if (!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta meta = item.getItemMeta();
+        if (!meta.hasDisplayName()) {
+            return;
+        }
+        int slotSize = inventory.getSize() - 9;
+        if (slot < slotSize) {
+            String clickedName = meta.getDisplayName();
+            String name = serverMapping.entrySet().stream()
+                    .filter(entry -> {
+                        ItemStack item2 = entry.getValue().apply(new ServerInfo());
+                        if (!item2.hasItemMeta()) {
+                            return false;
+                        }
+                        ItemMeta meta2 = item2.getItemMeta();
+                        if (!meta2.hasDisplayName()) {
+                            return false;
+                        }
+                        return meta2.getDisplayName().equals(clickedName);
+                    })
+                    .map(Map.Entry::getKey)
+                    .findFirst()
+                    .orElse(null);
+            String server = name != null ? name : clickedName;
+            requestConnect(player, server);
+            getServer().getScheduler().runTaskLaterAsynchronously(this, () -> {
+                player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1f, 1.5f);
+            }, 4);
+        }
+        player.playSound(player.getLocation(), Sound.CLICK, 1f, 1f);
     }
     // SERVER SELECTOR ITEM - END
 
@@ -234,6 +274,13 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
         player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
 
         return future;
+    }
+
+    public void requestConnect(Player player, String server) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server);
+        player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
     }
 
     @Override
