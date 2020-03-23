@@ -1,12 +1,9 @@
-name: ${project.name}
-main: net.azisaba.lobby.serverselector.ServerSelector
+name: ServerSelector2
+main: net.azisaba.lobby.serverselector2.ServerSelector
 version: ${project.version}
-author: siloneco
+authors: [siloneco, YukiLeafX]
 description: ${project.description}
 website: ${project.url}
-api-version: 1.13
 permissions:
-  serverselector.clearinv.exempt:
-    default: op
-  serverselector.receiveitem:
-    default: true
+  serverselector.receive:
+    default: false
