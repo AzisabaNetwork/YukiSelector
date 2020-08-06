@@ -130,7 +130,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "タグ: サバイバル, PvP")))
             .put("afk", info -> ItemFactory.create(
                     Material.WATER_BUCKET,
-                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Role-Playing Game",
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Away From Keyboard",
                     Arrays.asList(
                             ChatColor.GRAY + "放置専用サーバーです。",
                             "",
