@@ -53,7 +53,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "FPSゲームができる銃撃戦サーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.15.2)",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.12.2" + ChatColor.GRAY + " (1.12.2-1.16.x)",
                             "",
                             ChatColor.GRAY + "タグ: 銃, PvP")))
             .put("casino", info -> ItemFactory.create(
@@ -79,7 +79,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "目指しています。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.15.2)",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.16.x)",
                             "",
                             ChatColor.GRAY + "タグ: PvP, ミニゲーム")))
             .put("parkour", info -> ItemFactory.create(
@@ -92,7 +92,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "があります。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2-1.15.2)",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2のみ)",
                             "",
                             ChatColor.GRAY + "タグ: パルクール")))
             .put("main", info -> ItemFactory.create(
@@ -107,30 +107,48 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
                             "",
                             ChatColor.GRAY + "タグ: サバイバル, 経済")))
-            .put("p", info -> ItemFactory.create(
-                    Material.MINECART,
-                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "P",
+            .put("rpg", info -> ItemFactory.create(
+                    Material.CHEST,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Role-Playing Game",
                     Arrays.asList(
-                            ChatColor.GRAY + "p_maikura 氏とビルダー陣が作る",
-                            ChatColor.GRAY + "サーバーです。",
-                            ChatColor.GRAY + "本格的な建築を見ることができます。",
+                            ChatColor.GRAY + "RPG鯖主率いる運営たち独特の世界観が入り混じったサーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.13.2" + ChatColor.GRAY + " (1.13.2-1.15.2)",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " 1.15.2~1.16.x",
                             "",
-                            ChatColor.GRAY + "タグ: 観光")))
-            .put("pata", info -> ItemFactory.create(
-                    Material.ENCHANTMENT_TABLE,
-                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Pata",
+                            ChatColor.GRAY + "タグ: 銃, PvE, サバイバル, 経済")))
+            .put("lobby", info -> ItemFactory.create(
+                    Material.STONE,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Lobby",
                     Arrays.asList(
-                            ChatColor.GRAY + "2016年頃に patagonia002 が作り",
-                            ChatColor.GRAY + "運営していたサーバーです。",
-                            ChatColor.GRAY + "バニラにはない様々な要素があります。",
+                            ChatColor.GRAY + "AzisabaNetWorkの中心です。",
+                            ChatColor.GRAY + "このサーバーがなければアジ鯖には入れません！",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8.x" + ChatColor.GRAY + " (1.8.x-1.15.2)",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " 1.8~1.16.x",
                             "",
-                            ChatColor.GRAY + "タグ: サバイバル, 経済, PvE")))
+                            ChatColor.GRAY + "タグ: サバイバル, PvP")))
+            .put("afk", info -> ItemFactory.create(
+                    Material.WATER_BUCKET,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Role-Playing Game",
+                    Arrays.asList(
+                            ChatColor.GRAY + "放置専用サーバーです。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " 1.8~1.16.x",
+                            "",
+                            ChatColor.GRAY + "タグ: AFK")))
+            .put("hh", info -> ItemFactory.create(
+                    Material.TNT,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Hyper Hard Core",
+                    Arrays.asList(
+                            ChatColor.GRAY + "戦争をするもよし、略奪するもよし、ハードコア要素を楽しむもよし。",
+                            ChatColor.GRAY + "結構自由なサーバー。ただし死ぬと思い代償が...",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " 1.15.2のみ",
+                            "",
+                            ChatColor.GRAY + "タグ: サバイバル, PvP, ハードコア")))
             .build();
 
     private final String inventoryTitle = "サーバーを選択してね！";
