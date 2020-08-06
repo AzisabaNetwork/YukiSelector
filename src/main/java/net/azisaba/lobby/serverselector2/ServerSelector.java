@@ -114,7 +114,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "RPG鯖主率いる運営たち独特の世界観が入り混じったサーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " 1.15.2~1.16.x",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2-1.16.x)",
                             "",
                             ChatColor.GRAY + "タグ: 銃, PvE, サバイバル, 経済")))
             .put("lobby", info -> ItemFactory.create(
@@ -125,7 +125,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "このサーバーがなければアジ鯖には入れません！",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " 1.8~1.16.x",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " (1.8-1.16.x)",
                             "",
                             ChatColor.GRAY + "タグ: サバイバル, PvP")))
             .put("afk", info -> ItemFactory.create(
@@ -135,7 +135,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "放置専用サーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " 1.8~1.16.x",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.8" + ChatColor.GRAY + " (1.8-1.16.x)",
                             "",
                             ChatColor.GRAY + "タグ: AFK")))
             .put("hh", info -> ItemFactory.create(
@@ -146,7 +146,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "結構自由なサーバー。ただし死ぬと思い代償が...",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
-                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " 1.15.2のみ",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
                             "",
                             ChatColor.GRAY + "タグ: サバイバル, PvP, ハードコア")))
             .build();
