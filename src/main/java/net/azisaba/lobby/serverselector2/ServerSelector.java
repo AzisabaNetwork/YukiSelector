@@ -254,9 +254,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     .orElse(null);
             String server = name != null ? name : clickedName;
             requestConnect(player, server);
-            getServer().getScheduler().runTaskLaterAsynchronously(this, () -> {
-                player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1f, 1.5f);
-            }, 4);
+            getServer().getScheduler().runTaskLaterAsynchronously(this, () -> player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1f, 1.5f), 4);
         }
         player.playSound(player.getLocation(), Sound.CLICK, 1f, 1f);
     }
