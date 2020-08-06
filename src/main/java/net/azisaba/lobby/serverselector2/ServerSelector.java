@@ -149,6 +149,16 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
                             "",
                             ChatColor.GRAY + "タグ: サバイバル, PvP, ハードコア")))
+            .put("life", info -> ItemFactory.create(
+                    Material.WHEAT,
+                    ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Life",
+                    Arrays.asList(
+                            ChatColor.GRAY + "街作りにダンジョン攻略！様々な遊び方ができる生活サーバーです。",
+                            "",
+                            ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
+                            ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
+                            "",
+                            ChatColor.GRAY + "タグ: サバイバル, PvE")))
             .build();
 
     private final String inventoryTitle = "サーバーを選択してね！";
