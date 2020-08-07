@@ -143,7 +143,7 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Hyper Hard Core",
                     Arrays.asList(
                             ChatColor.GRAY + "戦争をするもよし、略奪するもよし、ハードコア要素を楽しむもよし。",
-                            ChatColor.GRAY + "結構自由なサーバー。ただし死ぬと思い代償が...",
+                            ChatColor.GRAY + "結構自由なサーバー。ただし死ぬと重い代償が...",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
