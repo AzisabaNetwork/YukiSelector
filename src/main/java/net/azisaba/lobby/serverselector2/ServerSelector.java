@@ -111,7 +111,8 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     Material.CHEST,
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Role-Playing Game",
                     Arrays.asList(
-                            ChatColor.GRAY + "RPG鯖主率いる運営たち独特の世界観が入り混じったサーバーです。",
+                            ChatColor.GRAY + "RPG鯖主率いる運営たち",
+                            ChatColor.GRAY + "独特の世界観が入り混じったサーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2-1.16.x)",
@@ -142,8 +143,11 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     Material.TNT,
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Hyper Hard Core",
                     Arrays.asList(
-                            ChatColor.GRAY + "戦争をするもよし、略奪するもよし、ハードコア要素を楽しむもよし。",
-                            ChatColor.GRAY + "結構自由なサーバー。ただし死ぬと重い代償が...",
+                            ChatColor.GRAY + "戦争をするもよし、",
+                            ChatColor.GRAY + "略奪するもよし",
+                            ChatColor.GRAY + "ハードコア要素を楽しむもよし。",
+                            ChatColor.GRAY + "結構自由なサーバー。",
+                            ChatColor.GRAY + "ただし死ぬと重い代償が...",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
@@ -153,7 +157,8 @@ public class ServerSelector extends JavaPlugin implements Listener, PluginMessag
                     Material.WHEAT,
                     ChatColor.WHITE + "" + ChatColor.UNDERLINE + "Life",
                     Arrays.asList(
-                            ChatColor.GRAY + "街作りにダンジョン攻略！様々な遊び方ができる生活サーバーです。",
+                            ChatColor.GRAY + "街作りにダンジョン攻略！",
+                            ChatColor.GRAY + "様々な遊び方ができる生活サーバーです。",
                             "",
                             ChatColor.GRAY + "オンライン人数: " + ChatColor.YELLOW + info.getPlayerCount() + ChatColor.GRAY + "人",
                             ChatColor.GRAY + "バージョン: " + ChatColor.GOLD + "1.15.2" + ChatColor.GRAY + " (1.15.2のみ)",
