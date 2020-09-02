@@ -1,9 +1,5 @@
-name: ServerSelector2
-main: net.azisaba.lobby.serverselector2.ServerSelector
-version: ${project.version}
-authors: [siloneco, YukiLeafX]
-description: ${project.description}
-website: ${project.url}
-permissions:
-  serverselector.receive:
-    default: false
+name: YukiSelector
+version: 1.0.0
+main: net.azisaba.yukiselector.YukiSelector
+
+authors: [YukiLeafX, siloneco, MEC11, huda0209]

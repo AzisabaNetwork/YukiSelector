@@ -1,0 +1,87 @@
+servers:
+  lgw:
+    item_type: BOW
+    name: Leon Gun War
+    description: |-
+      FPSゲームができる銃撃戦サーバーです！
+      とりあえず銃で撃ち合いしたい人は
+      このサーバーに参加しよう！
+    versions:
+      recommended: 1.12.2
+      supported: 1.12.2-1.16.2
+    state: OPEN
+  life:
+    item_type: WHEAT
+    name: Life
+    description: |-
+      街作りにダンジョン攻略！
+      様々な遊び方ができる新しい生活サーバーです！
+    versions:
+      recommended: 1.15.2
+    state: OPEN
+  casino:
+    item_type: NETHER_STAR
+    name: Phantasy Gate
+    description: |-
+      WGPサーバーの後継サーバーとして開発された
+      カジノに特化したサーバーです！
+      サバイバルで生活したり
+      ギャンブルをしたり出来ます！
+    versions:
+      recommended: 1.12.2
+      supported: 1.12.2-1.15.2
+    state: OPEN
+  lobby:
+    item_type: FIREWORK
+    name: Lobby
+    description: |-
+      アジ鯖に参加すると
+      最初に飛ばされるサーバーです。
+      ここから自分の行きたい
+      サーバーに移動しよう！
+    versions:
+      recommended: 1.12.2
+      supported: 1.8.x-1.16.2
+    state: SYSTEM_OPEN
+  afk:
+    item_type: WATER_BUCKET
+    name: Away From Keyboard (AFK)
+    description: |-
+      放置する自信がある場合にどうぞ。
+    versions:
+      recommended: 1.8.x
+      supported: 1.8.x-1.16.2
+    state: SYSTEM_OPEN
+  hh:
+    item_type: TNT
+    name: Hyper-Hardcore
+    description: |-
+      戦争するもよし
+      略奪するもよし
+      ハードコア要素を楽しむもよし。
+      結構自由なサーバーです。
+      ただし死ぬと思い代償が...
+    versions:
+      recommended: 1.15.2
+    state: DEVELOP
+  rpg:
+    item_type: CHEST
+    name: Role-Playing Game (RPG)
+    description: |-
+      RPG鯖主のMEC11率いる運営で作り上げる
+      独自の世界観が楽しめるサーバーです。
+    versions:
+      recommended: 1.15.2
+      supported: 1.15.2-1.16.2
+    state: DEVELOP
+  wave:
+    item_type: ROTTEN_FLESH
+    name: Ryuzu Zombie Hunt (RZH)
+    description: |-
+      アジ鯖運営Y_RyuZUとRZH運営で作り上げる
+      ウェーブ型のPvEサーバーです。
+      ゾンビを倒しまくれ！
+    versions:
+      recommended: 1.12.2
+      supported: 1.12.2-1.16.2
+    state: DEVELOP
