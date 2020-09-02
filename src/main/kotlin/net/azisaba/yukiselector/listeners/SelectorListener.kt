@@ -84,11 +84,10 @@ class SelectorListener(private val plugin: YukiSelector) : Listener {
         val serverName = ChatColor.stripColor(lore.last())
         val player = event.whoClicked as Player
 
-        plugin.logger.info("${player.name} が $serverName のアドレスを取得中...")
-        plugin.bungee.getServerIp(serverName).whenComplete { ip, _ ->
+        plugin.bungee.getPlayerCount(serverName).whenComplete { _, _ ->
             player.playSound(player.location, Sound.UI_BUTTON_CLICK, 1f, 1f)
 
-            plugin.logger.info("${player.name} が $serverName ($ip) に接続中...")
+            plugin.logger.info("${player.name} が $serverName に接続中...")
             plugin.bungee.connect(player, serverName)
         }
     }
