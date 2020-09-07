@@ -60,7 +60,7 @@ class Items(private val plugin: YukiSelector) {
     fun generateSelectingItems(): CompletableFuture<Pair<Int, Map<Int, ItemStack>>> {
         val future = CompletableFuture<Pair<Int, Map<Int, ItemStack>>>()
 
-        plugin.bungee.servers.whenComplete { servers, _ ->
+        plugin.bungee.getServers().whenComplete { servers, _ ->
             val cfs = servers.map { server ->
                 plugin.bungee.getPlayerCount(server).thenApply { count ->
                     val state = State.values()

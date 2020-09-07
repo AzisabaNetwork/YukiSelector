@@ -54,7 +54,7 @@ class SelectorListener(private val plugin: YukiSelector) : Listener {
         val serverName = ChatColor.stripColor(lore.last())
         val player = event.whoClicked as Player
 
-        plugin.bungee.servers.whenComplete { servers, _ ->
+        plugin.bungee.getServers().whenComplete { servers, _ ->
             servers.find { it == serverName } ?: return@whenComplete
 
             player.playSound(player.location, Sound.UI_BUTTON_CLICK, 1f, 1f)

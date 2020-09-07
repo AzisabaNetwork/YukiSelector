@@ -6,18 +6,16 @@ plugins {
 }
 
 group = "net.azisaba"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
-    implementation("io.github.leonardosnt:bungeechannelapi:1.0.0-SNAPSHOT")
 }
 
 tasks {
@@ -27,7 +25,6 @@ tasks {
     shadowJar {
         relocate("kotlin", UUID.randomUUID().toString())
         relocate("org.jetbrains.annotations", UUID.randomUUID().toString())
-        relocate("io.github.leonardosnt.bungeechannelapi", UUID.randomUUID().toString())
 
         minimize()
     }
