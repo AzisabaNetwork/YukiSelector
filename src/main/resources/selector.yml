@@ -8,7 +8,7 @@ servers:
       このサーバーに参加しよう！
     versions:
       recommended: 1.12.2
-      supported: 1.12.2-1.16.2
+      supported: 1.12.2-1.16.3
     state: OPEN
   life:
     item_type: WHEAT
@@ -41,7 +41,7 @@ servers:
       サーバーに移動しよう！
     versions:
       recommended: 1.12.2
-      supported: 1.8.x-1.16.2
+      supported: 1.8.x-1.16.3
     state: SYSTEM_OPEN
   afk:
     item_type: WATER_BUCKET
@@ -50,7 +50,7 @@ servers:
       放置する自信がある場合にどうぞ。
     versions:
       recommended: 1.8.x
-      supported: 1.8.x-1.16.2
+      supported: 1.8.x-1.16.3
     state: SYSTEM_OPEN
   hh:
     item_type: TNT
@@ -72,7 +72,7 @@ servers:
       独自の世界観が楽しめるサーバーです。
     versions:
       recommended: 1.15.2
-      supported: 1.15.2-1.16.2
+      supported: 1.15.2-1.16.3
     state: DEVELOP
   wave:
     item_type: ROTTEN_FLESH
@@ -83,5 +83,5 @@ servers:
       ゾンビを倒しまくれ！
     versions:
       recommended: 1.12.2
-      supported: 1.12.2-1.16.2
+      supported: 1.12.2-1.16.3
     state: DEVELOP
