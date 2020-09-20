@@ -74,13 +74,44 @@ servers:
       recommended: 1.15.2
       supported: 1.15.2-1.16.3
     state: DEVELOP
-  wave:
+  rzh:
     item_type: ROTTEN_FLESH
     name: Ryuzu Zombie Hunt (RZH)
     description: |-
       アジ鯖運営Y_RyuZUとRZH運営で作り上げる
       ウェーブ型のPvEサーバーです。
       ゾンビを倒しまくれ！
+    versions:
+      recommended: 1.12.2
+      supported: 1.12.2-1.16.3
+    state: DEVELOP
+  coretol:
+    item_type: SKULL_ITEM
+    item_damage: 3
+    item_skull_value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWJkODBjOTIxZDg5Y2VjMTVmMmI1ZTZmNWQ0YmJkZDc1NDgyMGM1MzBhYTUwZmYxYjE3N2VlMTRkM2E4MDkzNSJ9fX0=
+    name: Coretol
+    description: |-
+      - Minecraft MMORPG Server -
+    versions:
+      recommended: 1.15.2
+    state: DEVELOP
+  lgwf:
+    item_type: BOW
+    item_enchanted: true
+    name: Leon Gun Warfare
+    description: |-
+      生まれ変わったLGW
+      より多くのゲームモードで銃撃戦が楽しめる！
+    versions:
+      recommended: 1.14.4
+      supported: 1.8.x-1.16.3
+    state: DEVELOP
+  fsw:
+    item_type: LEATHER_HELMET
+    name: Freedom Santa World
+    description: |-
+      銃あり、ロストありのハードコアサバイバルPVP
+      殺し、略奪し、荒れた世界を生き抜こう！
     versions:
       recommended: 1.12.2
       supported: 1.12.2-1.16.3

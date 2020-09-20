@@ -1,9 +1,15 @@
 package net.azisaba.yukiselector
 
+import com.mojang.authlib.GameProfile
+import com.mojang.authlib.properties.Property
 import net.azisaba.yukiselector.util.State
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.SkullMeta
+import org.joor.Reflect
+import java.util.*
 import java.util.concurrent.CompletableFuture
+import java.util.logging.Level
 import kotlin.math.ceil
 import kotlin.math.max
 import org.bukkit.ChatColor as CC
@@ -27,7 +33,12 @@ class Items(private val plugin: YukiSelector) {
         val version = plugin.selectorConfig.getString("servers.$name.versions.recommended")
         val supportedVersions = plugin.selectorConfig.getString("servers.$name.versions.supported")
 
+        val damage = plugin.selectorConfig.getInt("servers.$name.item_damage", 0)
+            .toShort()
+        val skullValue = plugin.selectorConfig.getString("servers.$name.item_skull_value")
+
         return ItemStack(itemType).apply {
+            durability = damage
             amount = max(1, players)
             itemMeta = itemMeta.apply {
                 displayName = "${CC.RESET}${CC.UNDERLINE}$serverName"
@@ -53,6 +64,11 @@ class Items(private val plugin: YukiSelector) {
                     }
                     add("${CC.BLACK}$name")
                 }
+                takeIf { this is SkullMeta }?.let { this as SkullMeta }?.apply {
+                    val profile = GameProfile(UUID.randomUUID(), "")
+                    profile.properties.put("textures", Property("textures", skullValue))
+                    Reflect.on(this).set("profile", profile)
+                }
             }
         }
     }
@@ -66,6 +82,9 @@ class Items(private val plugin: YukiSelector) {
                     val state = State.values()
                         .find { it.name == plugin.selectorConfig.getString("servers.$server.state") }
                     state to createServerItem(server, count, state)
+                }.exceptionally { ex ->
+                    plugin.logger.log(Level.SEVERE, ex.message, ex)
+                    null
                 }
             }
 
