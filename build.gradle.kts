@@ -1,12 +1,12 @@
-import java.util.UUID
+import java.util.*
 
 plugins {
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.4.10"
     id("com.github.johnrengelman.shadow") version "6.0.0"
 }
 
 group = "net.azisaba"
-version = "1.0.5"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
