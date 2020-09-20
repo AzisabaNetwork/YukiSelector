@@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import net.azisaba.yukiselector.util.State
 import org.bukkit.Material
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import org.joor.Reflect
@@ -36,6 +38,7 @@ class Items(private val plugin: YukiSelector) {
         val damage = plugin.selectorConfig.getInt("servers.$name.item_damage", 0)
             .toShort()
         val skullValue = plugin.selectorConfig.getString("servers.$name.item_skull_value")
+        val enchanted = plugin.selectorConfig.getBoolean("servers.$name.item_enchanted")
 
         return ItemStack(itemType).apply {
             durability = damage
@@ -68,6 +71,10 @@ class Items(private val plugin: YukiSelector) {
                     val profile = GameProfile(UUID.randomUUID(), "")
                     profile.properties.put("textures", Property("textures", skullValue))
                     Reflect.on(this).set("profile", profile)
+                }
+                if (enchanted) {
+                    addEnchant(Enchantment.LURE, 1, false)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
                 }
             }
         }
